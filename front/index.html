@@ -1,14 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-AR">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Proyecto de M2 · Películas</title>
+
+    <!-- Fuente Inter 400/600/800 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./styles/reset.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
-    <h1>Proyecto de M2</h1>
+    <header class="site-header">
+      <div class="container header-inner">
+        <h1 class="brand" aria-label="PM2 Películas">🎬 Proyecto de M2</h1>
+        <nav aria-label="Principal">
+          <ul class="nav">
+            <li><a href="./index.html" aria-current="page">Inicio</a></li>
+            <li><a href="http://127.0.0.1:5502/index.html">Sobre Mi</a></li>
+            <li>
+              <a href="https://historiadelcine.es/">Un poco de historia</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
+    <main class="container">
+      <section class="hero" aria-label="Portada">
+        <h2 class="hero-title">Catálogo de Películas</h2>
+        <p class="hero-subtitle">Se renderiza desde <code>tempData</code>.</p>
+      </section>
+
+      <section
+        id="gallery"
+        class="gallery"
+        aria-label="Listado de películas"
+        aria-live="polite"
+      ></section>
+
+      <section class="hero" aria-label="Portada">
+        <h2 class="hero-title">Las 3 más taquilleras</h2>
+      </section>
+
+      <section
+        id="top3"
+        class="gallery"
+        aria-label="Las 3 películas más vistas"
+        aria-live="polite"
+      ></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>Hecho con ❤️ · Módulo 2</p></div>
+    </footer>
+
+    <!-- Importante: primero tempData, luego index.js -->
     <script src="./scripts/tempData.js"></script>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
