@@ -1,0 +1,35 @@
+{
+  // Llaves/brackets de colores + guías
+  "editor.bracketPairColorization.enabled": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+
+  // Colores suaves para guías e identificación de pares
+  "workbench.colorCustomizations": {
+  // ——— Brackets bien visibles ———
+  "editorBracketHighlight.foreground1": "#FF6B6B",
+  "editorBracketHighlight.foreground2": "#22D3EE",
+  "editorBracketHighlight.foreground3": "#F59E0B",
+  "editorBracketHighlight.foreground4": "#A78BFA",
+  "editorBracketHighlight.foreground5": "#34D399",
+  "editorBracketHighlight.unexpectedBracket.foreground": "#FFFFFF",
+  "editorBracketMatch.border": "#FFFFFF80",
+  "editorBracketMatch.background": "#FFFFFF10",
+
+  // ——— Guías de indentación (nuevas claves) ———
+  // fondos (pasivas)
+  "editorIndentGuide.background1": "#80808060",
+  "editorIndentGuide.background2": "#80808040",
+  // activas (la columna donde estás)
+  "editorIndentGuide.activeBackground1": "#FFFFFF80",
+  "editorIndentGuide.activeBackground2": "#FFFFFF60"
+}
+
+
+  // Errores/avisos en la línea (Error Lens)
+  "errorLens.enabled": true
+}
+

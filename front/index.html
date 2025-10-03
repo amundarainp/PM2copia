@@ -4,8 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Proyecto de M2 · Películas</title>
+    <meta
+      name="description"
+      content="Catálogo de películas del Módulo 2. Agregá títulos, mirá el Top 3 y gestioná tu lista."
+    />
 
-    <!-- Fuente Inter 400/600/800 -->
+    <!-- Icono (opcional) -->
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+
+    <!-- Fuente -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,9 +31,11 @@
         <nav aria-label="Principal">
           <ul class="nav">
             <li><a href="./index.html" aria-current="page">Inicio</a></li>
-            <li><a href="http://127.0.0.1:5502/index.html">Sobre Mi</a></li>
+            <li><a href="./sobre-mi.html">Sobre mí</a></li>
             <li>
-              <a href="https://historiadelcine.es/">Un poco de historia</a>
+              <a href="https://historiadelcine.es/" target="_blank" rel="noopener"
+                >Un poco de historia</a
+              >
             </li>
           </ul>
         </nav>
@@ -34,10 +43,80 @@
     </header>
 
     <main class="container">
-      <section class="hero" aria-label="Portada">
+      <section class="hero" aria-label="Encabezado del catálogo">
         <h2 class="hero-title">Catálogo de Películas</h2>
-        <p class="hero-subtitle">Se renderiza desde <code>tempData</code>.</p>
       </section>
+
+      <section class="toolbar" aria-label="Acciones del catálogo">
+        <button
+          id="add-movie-btn"
+          class="btn-primary"
+          aria-haspopup="dialog"
+          aria-controls="movie-dialog"
+        >
+          ➕ Agregar película
+        </button>
+      </section>
+
+      <dialog
+        id="movie-dialog"
+        aria-labelledby="movie-dialog-title"
+        aria-describedby="movie-dialog-desc"
+      >
+        <form id="movie-form" method="dialog">
+          <header class="dialog-header">
+            <h2 id="movie-dialog-title">Nueva película</h2>
+            <p id="movie-dialog-desc">Completá y guardá para agregarla al catálogo.</p>
+          </header>
+
+          <div class="form-grid">
+            <label>
+              <span>Título *</span>
+              <input name="title" type="text" autocomplete="off" />
+            </label>
+
+            <label>
+              <span>Año *</span>
+              <input name="year" type="number" min="1888" max="2100" inputmode="numeric" />
+            </label>
+
+            <label>
+              <span>Director *</span>
+              <input name="director" type="text" autocomplete="off" />
+            </label>
+
+            <label>
+              <span>Duración *</span>
+              <input name="duration" type="text" placeholder="Ej: 2h 10min" autocomplete="off" />
+            </label>
+
+            <label class="span-2">
+              <span>Géneros *</span>
+              <input
+                name="genre"
+                type="text"
+                placeholder="Action, Adventure, Sci-Fi"
+                autocomplete="off"
+              />
+            </label>
+
+            <label>
+              <span>Rating *</span>
+              <input name="rate" type="number" step="0.1" min="0" max="10" inputmode="decimal" />
+            </label>
+
+            <label class="span-2">
+              <span>Poster (URL)</span>
+              <input name="poster" type="url" placeholder="https://..." />
+            </label>
+          </div>
+
+          <footer class="dialog-actions">
+            <button type="button" id="cancel-movie-btn" class="btn-ghost">Cancelar</button>
+            <button type="submit" class="btn-primary">Guardar</button>
+          </footer>
+        </form>
+      </dialog>
 
       <section
         id="gallery"
@@ -46,24 +125,23 @@
         aria-live="polite"
       ></section>
 
-      <section class="hero" aria-label="Portada">
+      <section class="hero" aria-label="Encabezado del top 3">
         <h2 class="hero-title">Las 3 más taquilleras</h2>
       </section>
 
-      <section
-        id="top3"
-        class="gallery"
-        aria-label="Las 3 películas más vistas"
-        aria-live="polite"
-      ></section>
+      <section id="top3" class="gallery" aria-label="Listado Top 3" aria-live="polite"></section>
     </main>
 
     <footer class="site-footer">
       <div class="container"><p>Hecho con ❤️ · Módulo 2</p></div>
     </footer>
 
-    <!-- Importante: primero tempData, luego index.js -->
-    <script src="./scripts/tempData.js"></script>
+    <noscript>Necesitás habilitar JavaScript para usar el catálogo y el formulario.</noscript>
+
+    <!-- Scripts (orden recomendado) -->
+    <script src="./scripts/tempData.js" defer></script>
+    <script src="./scripts/top3Data.js" defer></script>
+    <!-- opcional; si no existe, no pasa nada -->
     <script src="./scripts/index.js" defer></script>
   </body>
 </html>
