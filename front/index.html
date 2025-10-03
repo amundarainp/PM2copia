@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="es-AR">
   <head>
+    <!-- Codificación y viewport responsivo -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Título de la pestaña y descripción (SEO + accesibilidad) -->
     <title>Proyecto de M2 · Películas</title>
     <meta
       name="description"
       content="Catálogo de películas del Módulo 2. Agregá títulos, mirá el Top 3 y gestioná tu lista."
     />
 
-    <!-- Icono (opcional) -->
+    <!-- Favicon (opcional) -->
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
 
-    <!-- Fuente -->
+    <!-- Fuente: precarga de dominios + import de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,18 +23,24 @@
       rel="stylesheet"
     />
 
-    <!-- Estilos -->
+    <!-- Estilos base y de la app (reset primero, luego estilos) -->
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
+    <!-- Header fijo con marca y navegación principal -->
     <header class="site-header">
       <div class="container header-inner">
+        <!-- aria-label describe el contenido del título para lectores -->
         <h1 class="brand" aria-label="PM2 Películas">🎬 Proyecto de M2</h1>
+
+        <!-- nav con label para accesibilidad -->
         <nav aria-label="Principal">
           <ul class="nav">
+            <!-- aria-current marca la página activa -->
             <li><a href="./index.html" aria-current="page">Inicio</a></li>
             <li><a href="./sobre-mi.html">Sobre mí</a></li>
+            <!-- target=_blank + rel=noopener por seguridad -->
             <li>
               <a href="https://historiadelcine.es/" target="_blank" rel="noopener"
                 >Un poco de historia</a
@@ -42,12 +51,16 @@
       </div>
     </header>
 
+    <!-- Contenido principal de la página -->
     <main class="container">
+      <!-- Hero del catálogo -->
       <section class="hero" aria-label="Encabezado del catálogo">
         <h2 class="hero-title">Catálogo de Películas</h2>
       </section>
 
+      <!-- Barra de acciones: botón que abre el diálogo -->
       <section class="toolbar" aria-label="Acciones del catálogo">
+        <!-- aria-haspopup indica que abre un diálogo; aria-controls referencia al <dialog> -->
         <button
           id="add-movie-btn"
           class="btn-primary"
@@ -58,17 +71,20 @@
         </button>
       </section>
 
+      <!-- Diálogo nativo HTML para alta de película -->
       <dialog
         id="movie-dialog"
         aria-labelledby="movie-dialog-title"
         aria-describedby="movie-dialog-desc"
       >
+        <!-- method="dialog" permite cerrar con submit; validamos en JS -->
         <form id="movie-form" method="dialog">
           <header class="dialog-header">
             <h2 id="movie-dialog-title">Nueva película</h2>
             <p id="movie-dialog-desc">Completá y guardá para agregarla al catálogo.</p>
           </header>
 
+          <!-- Grid simple de campos; los * son requeridos por nuestra validación JS -->
           <div class="form-grid">
             <label>
               <span>Título *</span>
@@ -77,6 +93,7 @@
 
             <label>
               <span>Año *</span>
+              <!-- Rango básico guiado; validación real en JS -->
               <input name="year" type="number" min="1888" max="2100" inputmode="numeric" />
             </label>
 
@@ -87,11 +104,13 @@
 
             <label>
               <span>Duración *</span>
+              <!-- Ejemplo de formato solo como pista; libre -->
               <input name="duration" type="text" placeholder="Ej: 2h 10min" autocomplete="off" />
             </label>
 
             <label class="span-2">
               <span>Géneros *</span>
+              <!-- Ingresamos lista separada por comas; el JS la normaliza -->
               <input
                 name="genre"
                 type="text"
@@ -102,22 +121,28 @@
 
             <label>
               <span>Rating *</span>
+              <!-- Decimales con step; validación de 0–10 en JS -->
               <input name="rate" type="number" step="0.1" min="0" max="10" inputmode="decimal" />
             </label>
 
             <label class="span-2">
               <span>Poster (URL)</span>
+              <!-- Opcional; si falta o es inválida usamos DEFAULT_IMG en JS -->
               <input name="poster" type="url" placeholder="https://..." />
             </label>
           </div>
 
+          <!-- Acciones del formulario -->
           <footer class="dialog-actions">
+            <!-- Cierra el diálogo sin guardar -->
             <button type="button" id="cancel-movie-btn" class="btn-ghost">Cancelar</button>
+            <!-- Dispara validación y alta en JS -->
             <button type="submit" class="btn-primary">Guardar</button>
           </footer>
         </form>
       </dialog>
 
+      <!-- Listado principal: el JS inserta tarjetas acá -->
       <section
         id="gallery"
         class="gallery"
@@ -125,23 +150,26 @@
         aria-live="polite"
       ></section>
 
+      <!-- Sección del Top 3 -->
       <section class="hero" aria-label="Encabezado del top 3">
         <h2 class="hero-title">Las 3 más taquilleras</h2>
       </section>
 
+      <!-- Top 3: respeta window.top3Data si existe; sino lo calcula -->
       <section id="top3" class="gallery" aria-label="Listado Top 3" aria-live="polite"></section>
     </main>
 
+    <!-- Footer simple -->
     <footer class="site-footer">
       <div class="container"><p>Hecho con ❤️ · Módulo 2</p></div>
     </footer>
 
+    <!-- Mensaje para usuarios sin JavaScript -->
     <noscript>Necesitás habilitar JavaScript para usar el catálogo y el formulario.</noscript>
 
-    <!-- Scripts (orden recomendado) -->
+    <!-- Scripts: datos base, Top 3 manual (opcional) y lógica de la app -->
     <script src="./scripts/tempData.js" defer></script>
     <script src="./scripts/top3Data.js" defer></script>
-    <!-- opcional; si no existe, no pasa nada -->
     <script src="./scripts/index.js" defer></script>
   </body>
 </html>

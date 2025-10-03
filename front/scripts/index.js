@@ -1,7 +1,9 @@
 'use strict';
 
+/* Imagen por defecto si falta poster o falla la carga */
 const DEFAULT_IMG = 'https://picsum.photos/seed/pm2-movies/400/600';
 
+/* ----- Referencias a elementos del DOM ----- */
 const dialogEl = document.getElementById('movie-dialog');
 const openBtn = document.getElementById('add-movie-btn');
 const cancelBtn = document.getElementById('cancel-movie-btn');
@@ -9,7 +11,11 @@ const formEl = document.getElementById('movie-form');
 const galleryEl = document.getElementById('gallery');
 const top3El = document.getElementById('top3');
 
-// Datos iniciales: acepta const tempData o window.tempData
+/* ----- Datos iniciales -----
+   Acepta:
+   - const tempData (global por script normal)
+   - window.tempData
+   Si no hay datos, usa 2 películas de ejemplo. */
 const incoming =
   (typeof tempData !== 'undefined' && Array.isArray(tempData) && tempData) ||
   (Array.isArray(window.tempData) && window.tempData) ||
@@ -42,17 +48,20 @@ const movies = (
       ]
 ).map(normalizeMovie);
 
-// Top 3 manual si existe: const top3Data o window.top3Data
+/* Top 3 manual si existe (respeta tus posters):
+   - const top3Data
+   - window.top3Data
+   Si no existe, se calcula por rating. */
 const top3Source =
   (typeof top3Data !== 'undefined' && Array.isArray(top3Data) && top3Data) ||
   (Array.isArray(window.top3Data) && window.top3Data) ||
   [];
 
-// Abrir / cerrar diálogo
+/* ----- Eventos de UI: abrir/cerrar diálogo ----- */
 openBtn?.addEventListener('click', () => dialogEl?.showModal());
 cancelBtn?.addEventListener('click', () => dialogEl?.close());
 
-// Guardar con validación
+/* ----- Alta de película con validación simple ----- */
 formEl?.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -67,6 +76,7 @@ formEl?.addEventListener('submit', (e) => {
     poster: (data.get('poster') || '').trim(),
   };
 
+  // Campos requeridos (excepto poster)
   const required = [
     ['title', 'Título'],
     ['year', 'Año'],
@@ -76,6 +86,7 @@ formEl?.addEventListener('submit', (e) => {
     ['rate', 'Rating'],
   ];
 
+  // Si faltan, alert + foco en el primero
   const missing = required.filter(([k]) => !fields[k]);
   if (missing.length) {
     const firstKey = missing[0][0];
@@ -84,6 +95,7 @@ formEl?.addEventListener('submit', (e) => {
     return;
   }
 
+  // Validaciones numéricas básicas
   const yearNum = Number(fields.year);
   const rateNum = Number(fields.rate);
   if (!Number.isFinite(yearNum) || yearNum < 1888 || yearNum > 2100) {
@@ -97,8 +109,10 @@ formEl?.addEventListener('submit', (e) => {
     return;
   }
 
+  // Poster opcional: si es inválido o vacío, cae en DEFAULT_IMG
   const posterUrl = isValidUrl(fields.poster) ? fields.poster : DEFAULT_IMG;
 
+  // Normaliza a objeto de tarjeta
   const movie = normalizeMovie({
     title: fields.title,
     year: yearNum,
@@ -118,7 +132,9 @@ formEl?.addEventListener('submit', (e) => {
   dialogEl?.close();
 });
 
-// Utils
+/* ===================== Utils ===================== */
+
+/* Valida URL sencilla usando URL() */
 function isValidUrl(str) {
   if (!str) return false;
   try {
@@ -129,6 +145,10 @@ function isValidUrl(str) {
   }
 }
 
+/* Uniforma el shape de película para render:
+   - Asegura strings en campos de texto
+   - Convierte genre[] a "A, B, C"
+   - Mantiene 0 como rating válido (descarta NaN) */
 function normalizeMovie(m) {
   const parsedRate = Number(m?.rate);
   return {
@@ -139,11 +159,11 @@ function normalizeMovie(m) {
     director: m?.director || '',
     duration: m?.duration || '',
     genre: Array.isArray(m?.genre) ? m.genre.join(', ') : m?.genre || '',
-    // mantiene 0, descarta NaN
     rating: Number.isFinite(parsedRate) ? parsedRate : null,
   };
 }
 
+/* Crea el HTML de una tarjeta usando las clases del CSS actual */
 function createCard(movie) {
   const el = document.createElement('article');
   el.className = 'card';
@@ -164,6 +184,9 @@ function createCard(movie) {
   return el;
 }
 
+/* Render principal:
+   - Pinta todo el catálogo
+   - Para el Top 3: usa top3Data si existe, si no lo calcula por rating */
 function render() {
   galleryEl.innerHTML = '';
   movies.forEach((m) => galleryEl.appendChild(createCard(m)));
@@ -179,4 +202,5 @@ function render() {
   list.forEach((m) => top3El.appendChild(createCard(m)));
 }
 
+/* Primera pintura */
 render();

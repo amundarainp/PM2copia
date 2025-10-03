@@ -1,25 +1,22 @@
 :root {
-  /* Colores base */
+  /* ---------- Design tokens (colores, sombras, radios, escalas) ---------- */
   --bg: #f7f7fb;
   --panel: #ffffff;
   --text: #1b1e28;
   --muted: #5b667a;
 
-  /* Acentos */
   --primary: #6faf9a;
   --primary-700: #5a9884;
   --accent: #a69bd4;
 
-  /* Bordes/sombras */
   --line: #e4e6ee;
   --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
 
-  /* Layout/escala */
   --radius: 16px;
   --radius-sm: 12px;
   --container: 1100px;
 
-  /* Tipografía fluida */
+  /* Tipografía fluida para jerarquía de textos */
   --step--1: clamp(0.86rem, 0.83rem + 0.15vw, 0.95rem);
   --step-0: clamp(1rem, 0.95rem + 0.3vw, 1.1rem);
   --step-1: clamp(1.22rem, 1.05rem + 0.8vw, 1.55rem);
@@ -27,10 +24,11 @@
   --step-3: clamp(1.9rem, 1.55rem + 1.8vw, 2.55rem);
 }
 
-/* Base */
+/* ---------- Base / layout global ---------- */
 html {
   font-size: 16px;
-}
+} /* base legible (no tocar si no querés reescalar todo) */
+
 html,
 body {
   height: 100%;
@@ -46,16 +44,16 @@ body {
 .container {
   max-width: var(--container);
   margin-inline: auto;
-  padding: 24px clamp(16px, 3vw, 32px);
+  padding: 24px clamp(16px, 3vw, 32px); /* respiro lateral fluido */
 }
 
-/* Header / Nav */
+/* ---------- Header / navegación ---------- */
 .site-header {
-  position: sticky;
+  position: sticky; /* fija arriba al hacer scroll */
   top: 0;
   z-index: 10;
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px); /* efecto vidrio */
   border-bottom: 1px solid var(--line);
 }
 .header-inner {
@@ -78,7 +76,7 @@ body {
 .nav a {
   font-size: var(--step-0);
   padding: 8px 14px;
-  border-radius: 999px;
+  border-radius: 999px; /* píldora */
   border: 1px solid transparent;
   color: var(--text);
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
@@ -93,7 +91,7 @@ body {
   box-shadow: 0 6px 14px rgba(17, 24, 39, 0.08) inset, 0 1px 0 #fff;
 }
 
-/* Hero */
+/* ---------- Sección hero ---------- */
 .hero {
   padding-block: clamp(18px, 3vw, 34px);
 }
@@ -109,7 +107,7 @@ body {
   font-size: var(--step-0);
 }
 
-/* Toolbar + botones */
+/* ---------- Toolbar / botones de acción ---------- */
 .toolbar {
   display: flex;
   justify-content: flex-end;
@@ -142,18 +140,18 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* Galería (compacta, igual tamaño que viste) */
+/* ---------- Galería de tarjetas ---------- */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* densidad actual */
   gap: 16px;
   margin-block: 20px 54px;
 }
 
-/* Card */
+/* ---------- Tarjeta de película ---------- */
 .card {
-  max-width: 220px; /* tamaño actual */
-  margin-inline: auto;
+  max-width: 220px; /* tamaño actual que querés mantener */
+  margin-inline: auto; /* centra en su columna */
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -170,27 +168,27 @@ body {
   border-color: #daddea;
 }
 
-/* Poster centrado y en ratio 2:3
-   Soporta markup nuevo (.card-poster-wrap / .card-poster)
-   y el viejo (.card-media img) */
-.card-poster-wrap,
+/* Área del póster (dos variantes de markup soportadas) */
+.card-poster-wrap,   /* markup nuevo */
 .card-media {
-  aspect-ratio: 2 / 3;
+  /* markup legado */
+  aspect-ratio: 2 / 3; /* mantiene formato vertical de póster */
   width: 100%;
   display: grid;
-  place-items: center;
+  place-items: center; /* centra la imagen */
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.06));
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
-.card-poster,
+.card-poster,        /* img del markup nuevo */
 .card-media img {
+  /* img del markup legado */
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* mantiene ratio, sin recorte */
+  object-fit: contain; /* sin recortes ni deformación */
   display: block;
 }
 
-/* Cuerpo */
+/* Cuerpo de la tarjeta */
 .card-body {
   padding: 10px 12px;
   display: grid;
@@ -211,7 +209,7 @@ body {
   color: #4b5563;
 }
 
-/* Diálogo + formulario */
+/* ---------- Diálogo y formulario ---------- */
 #movie-dialog {
   border: none;
   padding: 0;
@@ -224,12 +222,14 @@ body {
 #movie-dialog::backdrop {
   background: rgba(0, 0, 0, 0.55);
 }
+
 #movie-form {
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 18px clamp(16px, 2.5vw, 22px);
 }
+
 .dialog-header {
   display: grid;
   gap: 6px;
@@ -246,17 +246,19 @@ body {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columnas en desktop */
   gap: 12px;
 }
 .form-grid .span-2 {
   grid-column: 1 / -1;
-}
+} /* campos que ocupan el ancho completo */
+
 label {
   display: grid;
   gap: 6px;
   font-size: var(--step-0);
 }
+
 input {
   width: 100%;
   background: #fff;
@@ -270,6 +272,7 @@ input:focus-visible {
   outline: 2px solid color-mix(in oklab, var(--accent) 55%, white);
   outline-offset: 2px;
 }
+
 .dialog-actions {
   display: flex;
   gap: 10px;
@@ -277,8 +280,9 @@ input:focus-visible {
   margin-top: 4px;
 }
 
+/* ---------- Responsive ---------- */
 @media (max-width: 560px) {
   .form-grid {
     grid-template-columns: 1fr;
-  }
+  } /* 1 columna en mobile */
 }
