@@ -84,6 +84,18 @@
             <p id="movie-dialog-desc">Completá y guardá para agregarla al catálogo.</p>
           </header>
 
+          <section class="ia-box">
+            <label for="ia-title">Buscar por título</label>
+            <div class="ia-row">
+              <input id="ia-title" type="text" placeholder="Ej: The Dark Knight" />
+              <button id="ia-suggest" type="button">
+                <span class="ia-label">Sugerir IA</span>
+                <span class="ia-spinner" aria-hidden="true" hidden></span>
+              </button>
+            </div>
+            <small class="ia-hint">Usa OMDb. Revisá los campos y luego guardá con “Agregar”.</small>
+          </section>
+
           <!-- Grid simple de campos; los * son requeridos por nuestra validación JS -->
           <div class="form-grid">
             <label>
@@ -141,6 +153,34 @@
           </footer>
         </form>
       </dialog>
+      <section id="controls" class="controls">
+        <div class="controls-row">
+          <label>
+            Ordenar por
+            <select id="sort-by">
+              <option value="year">Año</option>
+              <option value="rating">Rating</option>
+            </select>
+          </label>
+
+          <label>
+            Dirección
+            <select id="sort-dir">
+              <option value="desc">Descendente</option>
+              <option value="asc">Ascendente</option>
+            </select>
+          </label>
+
+          <label>
+            Género
+            <select id="genre-filter">
+              <option value="__all__">Todos</option>
+            </select>
+          </label>
+
+          <button id="reset-filters" type="button">Reset</button>
+        </div>
+      </section>
 
       <!-- Listado principal: el JS inserta tarjetas acá -->
       <section

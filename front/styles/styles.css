@@ -209,6 +209,39 @@ body {
   color: #4b5563;
 }
 
+.controls {
+  margin: 1rem 0 1.25rem;
+}
+.controls-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.controls-row label {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.card .actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+.card .btn-danger {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #ffe8e8;
+  color: #b00020;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.card .btn-danger:hover {
+  background: #ffdcdc;
+}
+
 /* ---------- Diálogo y formulario ---------- */
 #movie-dialog {
   border: none;
@@ -285,4 +318,46 @@ input:focus-visible {
   .form-grid {
     grid-template-columns: 1fr;
   } /* 1 columna en mobile */
+}
+
+.ia-box {
+  margin: 1rem 0;
+}
+.ia-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+#ia-title {
+  flex: 1;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+}
+#ia-suggest {
+  position: relative;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+#ia-suggest[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ia-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  display: inline-block;
+  margin-left: 0.4rem;
+  animation: ia-spin 0.8s linear infinite;
+}
+@keyframes ia-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
