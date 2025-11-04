@@ -1,215 +1,269 @@
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es-AR" data-bs-theme="light">
   <head>
-    <!-- Codificación y viewport responsivo -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Título de la pestaña y descripción (SEO + accesibilidad) -->
     <title>Proyecto de M2 · Películas</title>
-    <meta
-      name="description"
-      content="Catálogo de películas del Módulo 2. Agregá títulos, mirá el Top 3 y gestioná tu lista."
-    />
-
-    <!-- Favicon (opcional) -->
+    <meta name="description" content="Catálogo de películas del Módulo 2." />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
 
-    <!-- Fuente: precarga de dominios + import de Google Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Estilos base y de la app (reset primero, luego estilos) -->
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
+
   <body>
-    <!-- Header fijo con marca y navegación principal -->
+    <!-- ========== HEADER / NAV ========== -->
     <header class="site-header">
       <div class="container header-inner">
-        <!-- aria-label describe el contenido del título para lectores -->
-        <h1 class="brand" aria-label="PM2 Películas">🎬 Proyecto de M2</h1>
+        <h1 class="brand d-flex align-items-center gap-2 m-0" aria-label="PM2 Películas">
+          🎬 <span>Proyecto de M2</span>
+        </h1>
 
-        <!-- nav con label para accesibilidad -->
-        <nav aria-label="Principal">
-          <ul class="nav">
-            <!-- aria-current marca la página activa -->
-            <li><a href="./index.html" aria-current="page">Inicio</a></li>
-            <li><a href="./sobre-mi.html">Sobre mí</a></li>
-            <!-- target=_blank + rel=noopener por seguridad -->
-            <li>
-              <a href="https://historiadelcine.es/" target="_blank" rel="noopener"
-                >Un poco de historia</a
+        <!-- Navegación principal — ahora separada del brand y pegada al toggle -->
+        <nav class="ms-auto me-2" aria-label="Principal">
+          <ul class="nav align-items-center">
+            <li class="nav-item">
+              <a class="nav-link px-3" href="./index.html" aria-current="page">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="sobre-mi.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Sobre mí</a
               >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="./historia.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Un poco de historia
+              </a>
             </li>
           </ul>
         </nav>
+
+        <!-- Toggle claro/oscuro (sin ms-auto para que quede cerca del nav) -->
+        <button
+          id="theme-toggle"
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          aria-pressed="false"
+          title="Cambiar tema claro/oscuro"
+        >
+          🌞/🌙
+        </button>
       </div>
     </header>
 
-    <!-- Contenido principal de la página -->
-    <main class="container">
-      <!-- Hero del catálogo -->
+    <!-- ===== resto del archivo SIN CAMBIOS ===== -->
+    <main class="container mb-1">
       <section class="hero" aria-label="Encabezado del catálogo">
         <h2 class="hero-title">Catálogo de Películas</h2>
       </section>
-
-      <!-- Barra de acciones: botón que abre el diálogo -->
       <section class="toolbar" aria-label="Acciones del catálogo">
-        <!-- aria-haspopup indica que abre un diálogo; aria-controls referencia al <dialog> -->
         <button
           id="add-movie-btn"
-          class="btn-primary"
+          type="button"
+          class="btn btn-outline-secondary fw-bolder mb-2"
           aria-haspopup="dialog"
           aria-controls="movie-dialog"
         >
-          ➕ Agregar película
+          Agregar película
         </button>
       </section>
 
-      <!-- Diálogo nativo HTML para alta de película -->
       <dialog
         id="movie-dialog"
         aria-labelledby="movie-dialog-title"
         aria-describedby="movie-dialog-desc"
       >
-        <!-- method="dialog" permite cerrar con submit; validamos en JS -->
-        <form id="movie-form" method="dialog">
+        <form id="movie-form" method="dialog" class="needs-validation" novalidate>
           <header class="dialog-header">
-            <h2 id="movie-dialog-title">Nueva película</h2>
-            <p id="movie-dialog-desc">Completá y guardá para agregarla al catálogo.</p>
+            <h2 id="movie-dialog-title" class="mb-1">Nueva película</h2>
+            <p id="movie-dialog-desc" class="mb-2">Completá y guardá para agregarla al catálogo.</p>
           </header>
-
           <section class="ia-box">
-            <label for="ia-title">Buscar por título</label>
+            <label for="ia-title" class="form-label mb-1">Buscar por título</label>
             <div class="ia-row">
-              <input id="ia-title" type="text" placeholder="Ej: The Dark Knight" />
-              <button id="ia-suggest" type="button">
-                <span class="ia-label">Sugerir IA</span>
+              <input
+                id="ia-title"
+                type="text"
+                class="form-control form-control-sm"
+                placeholder="Ej: The Dark Knight"
+              />
+              <button id="ia-suggest" type="button" class="btn btn-outline-secondary btn-sm">
+                <span class="ia-label">Buscar datos</span>
                 <span class="ia-spinner" aria-hidden="true" hidden></span>
               </button>
             </div>
-            <small class="ia-hint">Usa OMDb. Revisá los campos y luego guardá con “Agregar”.</small>
           </section>
 
-          <!-- Grid simple de campos; los * son requeridos por nuestra validación JS -->
           <div class="form-grid">
-            <label>
-              <span>Título *</span>
-              <input name="title" type="text" autocomplete="off" />
-            </label>
+            <div class="form-floating">
+              <input name="title" type="text" class="form-control" id="fld-title" placeholder=" " />
+              <label for="fld-title">Título *</label>
+            </div>
 
-            <label>
-              <span>Año *</span>
-              <!-- Rango básico guiado; validación real en JS -->
-              <input name="year" type="number" min="1888" max="2100" inputmode="numeric" />
-            </label>
+            <div class="form-floating">
+              <input
+                name="year"
+                type="number"
+                min="1888"
+                max="2100"
+                class="form-control"
+                id="fld-year"
+                placeholder=" "
+                inputmode="numeric"
+              />
+              <label for="fld-year">Año *</label>
+            </div>
 
-            <label>
-              <span>Director *</span>
-              <input name="director" type="text" autocomplete="off" />
-            </label>
+            <div class="form-floating">
+              <input
+                name="director"
+                type="text"
+                class="form-control"
+                id="fld-director"
+                placeholder=" "
+                autocomplete="off"
+              />
+              <label for="fld-director">Director *</label>
+            </div>
 
-            <label>
-              <span>Duración *</span>
-              <!-- Ejemplo de formato solo como pista; libre -->
-              <input name="duration" type="text" placeholder="Ej: 2h 10min" autocomplete="off" />
-            </label>
+            <div class="form-floating">
+              <input
+                name="duration"
+                type="text"
+                class="form-control"
+                id="fld-duration"
+                placeholder=" "
+                autocomplete="off"
+              />
+              <label for="fld-duration">Duración *</label>
+            </div>
 
-            <label class="span-2">
-              <span>Géneros *</span>
-              <!-- Ingresamos lista separada por comas; el JS la normaliza -->
+            <div class="form-floating span-2">
               <input
                 name="genre"
                 type="text"
-                placeholder="Action, Adventure, Sci-Fi"
+                class="form-control"
+                id="fld-genre"
+                placeholder=" "
                 autocomplete="off"
               />
-            </label>
+              <label for="fld-genre">Géneros *</label>
+            </div>
 
-            <label>
-              <span>Rating *</span>
-              <!-- Decimales con step; validación de 0–10 en JS -->
-              <input name="rate" type="number" step="0.1" min="0" max="10" inputmode="decimal" />
-            </label>
+            <div class="form-floating">
+              <input
+                name="rate"
+                type="number"
+                step="0.1"
+                min="0"
+                max="10"
+                class="form-control"
+                id="fld-rate"
+                placeholder=" "
+                inputmode="decimal"
+              />
+              <label for="fld-rate">Rating *</label>
+            </div>
 
-            <label class="span-2">
-              <span>Poster (URL)</span>
-              <!-- Opcional; si falta o es inválida usamos DEFAULT_IMG en JS -->
-              <input name="poster" type="url" placeholder="https://..." />
-            </label>
+            <div class="form-floating span-2">
+              <input
+                name="poster"
+                type="url"
+                class="form-control"
+                id="fld-poster"
+                placeholder=" "
+              />
+              <label for="fld-poster">Poster (URL)</label>
+            </div>
           </div>
 
-          <!-- Acciones del formulario -->
           <footer class="dialog-actions">
-            <!-- Cierra el diálogo sin guardar -->
-            <button type="button" id="cancel-movie-btn" class="btn-ghost">Cancelar</button>
-            <!-- Dispara validación y alta en JS -->
-            <button type="submit" class="btn-primary">Guardar</button>
+            <button type="button" id="cancel-movie-btn" class="btn btn-outline-secondary">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
           </footer>
         </form>
       </dialog>
+
       <section id="controls" class="controls">
-        <div class="controls-row">
-          <label>
-            Ordenar por
-            <select id="sort-by">
-              <option value="year">Año</option>
-              <option value="rating">Rating</option>
-            </select>
-          </label>
+        <div
+          class="d-flex flex-wrap align-items-center gap-2 p-2 bg-body border rounded w-100 shadow-sm"
+        >
+          <label class="form-label mb-0 me-1">Ordenar por</label>
+          <select id="sort-by" class="form-select form-select-sm w-auto">
+            <option value="year">Año</option>
+            <option value="rating">Rating</option>
+          </select>
 
-          <label>
-            Dirección
-            <select id="sort-dir">
-              <option value="desc">Descendente</option>
-              <option value="asc">Ascendente</option>
-            </select>
-          </label>
+          <label class="form-label mb-0 ms-3 me-1">Dirección</label>
+          <select id="sort-dir" class="form-select form-select-sm w-auto">
+            <option value="desc">Descendente</option>
+            <option value="asc">Ascendente</option>
+          </select>
 
-          <label>
-            Género
-            <select id="genre-filter">
-              <option value="__all__">Todos</option>
-            </select>
-          </label>
+          <label class="form-label mb-0 ms-3 me-1">Género</label>
+          <select id="genre-filter" class="form-select form-select-sm w-auto">
+            <option value="__all__">Todos</option>
+          </select>
 
-          <button id="reset-filters" type="button">Reset</button>
+          <button
+            id="reset-filters"
+            type="button"
+            class="btn btn-outline-secondary btn-sm ms-auto fw-bolder"
+          >
+            Reset
+          </button>
         </div>
       </section>
 
-      <!-- Listado principal: el JS inserta tarjetas acá -->
       <section
         id="gallery"
-        class="gallery"
+        class="gallery d-flex flex-wrap justify-content-center gap-3"
         aria-label="Listado de películas"
         aria-live="polite"
       ></section>
 
-      <!-- Sección del Top 3 -->
       <section class="hero" aria-label="Encabezado del top 3">
         <h2 class="hero-title">Las 3 más taquilleras</h2>
       </section>
-
-      <!-- Top 3: respeta window.top3Data si existe; sino lo calcula -->
-      <section id="top3" class="gallery" aria-label="Listado Top 3" aria-live="polite"></section>
+      <section
+        id="top3"
+        class="gallery d-flex flex-wrap justify-content-center gap-3"
+        aria-label="Listado Top 3"
+        aria-live="polite"
+      ></section>
     </main>
 
-    <!-- Footer simple -->
     <footer class="site-footer">
-      <div class="container"><p>Hecho con ❤️ · Módulo 2</p></div>
+      <div class="container"><p class="text-center">Hecho con ❤️ · Módulo 2</p></div>
     </footer>
 
-    <!-- Mensaje para usuarios sin JavaScript -->
     <noscript>Necesitás habilitar JavaScript para usar el catálogo y el formulario.</noscript>
-
-    <!-- Scripts: datos base, Top 3 manual (opcional) y lógica de la app -->
-    <script src="./scripts/tempData.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./scripts/top3Data.js" defer></script>
-    <script src="./scripts/index.js" defer></script>
+    <script src="./public/bundle.js" defer></script>
   </body>
 </html>

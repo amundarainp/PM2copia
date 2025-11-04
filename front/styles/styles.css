@@ -2,6 +2,7 @@
   /* ---------- Design tokens (colores, sombras, radios, escalas) ---------- */
   --bg: #f7f7fb;
   --panel: #ffffff;
+  --panel-soft: #f4f6fb; /* gris suave para cards */
   --text: #1b1e28;
   --muted: #5b667a;
 
@@ -22,12 +23,42 @@
   --step-1: clamp(1.22rem, 1.05rem + 0.8vw, 1.55rem);
   --step-2: clamp(1.48rem, 1.25rem + 1.2vw, 1.95rem);
   --step-3: clamp(1.9rem, 1.55rem + 1.8vw, 2.55rem);
+
+  /* ===== Tamaño uniforme de tarjeta ===== */
+  --card-w: 220px; /* ancho fijo de la tarjeta */
+  --poster-ratio: 2/3; /* mantiene 2:3 (w:h) */
+
+  /* ===== Tipos más chicos dentro de la card ===== */
+  --card-title: 0.9rem;
+  --card-text: 0.8rem;
+
+  /* Mapear con Bootstrap (paleta/acento) */
+  --bs-primary: var(--primary);
+  --bs-body-font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    sans-serif;
+}
+
+/* Tema oscuro (Bootstrap usa data-bs-theme) */
+html[data-bs-theme='dark'] {
+  --bg: #0f1116;
+  --panel: #151821;
+  --panel-soft: #191d28;
+  --text: #e7eaf3;
+  --muted: #a7b0c2;
+  --line: #2a2f3b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* ---------- Base / layout global ---------- */
 html {
   font-size: 16px;
-} /* base legible (no tocar si no querés reescalar todo) */
+  scrollbar-gutter: stable both-edges;
+}
+@supports not (scrollbar-gutter: stable) {
+  body {
+    overflow-y: scroll;
+  }
+}
 
 html,
 body {
@@ -35,25 +66,30 @@ body {
   background: radial-gradient(1200px 700px at 8% -12%, #f1f2f8 0%, transparent 60%),
     radial-gradient(900px 600px at 100% 0%, #eff1f7 0%, transparent 55%), var(--bg);
   color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: var(--bs-body-font-family);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+html[data-bs-theme='dark'] body {
+  background: radial-gradient(1200px 700px at 8% -12%, #0f1116 0%, transparent 60%),
+    radial-gradient(900px 600px at 100% 0%, #0d0f14 0%, transparent 55%), var(--bg);
+}
+
 .container {
   max-width: var(--container);
   margin-inline: auto;
-  padding: 24px clamp(16px, 3vw, 32px); /* respiro lateral fluido */
+  padding: 24px clamp(16px, 3vw, 32px);
 }
 
 /* ---------- Header / navegación ---------- */
 .site-header {
-  position: sticky; /* fija arriba al hacer scroll */
+  position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px); /* efecto vidrio */
+  background: color-mix(in oklab, var(--panel) 85%, transparent);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
 .header-inner {
@@ -68,24 +104,22 @@ body {
   letter-spacing: 0.2px;
 }
 
-.nav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+/* refuerzo nav look limpio con utilidades Bootstrap ya presentes */
 .nav a {
-  font-size: var(--step-0);
-  padding: 8px 14px;
-  border-radius: 999px; /* píldora */
+  border-radius: 999px;
   border: 1px solid transparent;
   color: var(--text);
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .nav a[aria-current='page'],
 .nav a:hover,
 .nav a:focus-visible {
   outline: none;
-  background: linear-gradient(180deg, #fff 0%, #f4f6fb 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, #fff 70%, var(--panel)) 0%,
+    var(--panel) 100%
+  );
   border-color: var(--line);
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(17, 24, 39, 0.08) inset, 0 1px 0 #fff;
@@ -132,7 +166,7 @@ body {
   outline-offset: 2px;
 }
 .btn-ghost {
-  background: #fff;
+  background: var(--panel);
   color: var(--text);
   border-color: var(--line);
 }
@@ -143,22 +177,26 @@ body {
 /* ---------- Galería de tarjetas ---------- */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* densidad actual */
+
+  /* Distribuye las tarjetas a lo ancho, manteniendo 220px fijos */
+  grid-template-columns: repeat(auto-fit, var(--card-w));
+  justify-content: space-between; /* reparte el espacio extra entre columnas */
+
   gap: 16px;
   margin-block: 20px 54px;
+  min-height: 240px;
 }
 
-/* ---------- Tarjeta de película ---------- */
+/* ---------- Tarjeta de película (ancho fijo 220px) ---------- */
 .card {
-  max-width: 220px; /* tamaño actual que querés mantener */
-  margin-inline: auto; /* centra en su columna */
-  background: var(--panel);
+  width: var(--card-w);
+  background: var(--panel-soft); /* gris suave como “Agregar película” */
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
   overflow: hidden;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr; /* poster + cuerpo = una sola tarjeta */
   transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   min-height: 100%;
 }
@@ -168,35 +206,35 @@ body {
   border-color: #daddea;
 }
 
-/* Área del póster (dos variantes de markup soportadas) */
-.card-poster-wrap,   /* markup nuevo */
+/* ---------- Poster (2:3 exacto, integrado a la card) ---------- */
+.card-poster-wrap,
 .card-media {
-  /* markup legado */
-  aspect-ratio: 2 / 3; /* mantiene formato vertical de póster */
+  position: relative;
+  aspect-ratio: var(--poster-ratio); /* 2 / 3 */
   width: 100%;
-  display: grid;
-  place-items: center; /* centra la imagen */
+  overflow: hidden;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.06));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06); /* divide visualmente, sigue siendo una sola card */
 }
-.card-poster,        /* img del markup nuevo */
+.card-poster,
 .card-media img {
-  /* img del markup legado */
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* sin recortes ni deformación */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* sin recortes NI estiro */
   display: block;
 }
 
-/* Cuerpo de la tarjeta */
+/* ---------- Cuerpo de la tarjeta (tipos más chicos) ---------- */
 .card-body {
-  padding: 10px 12px;
+  padding: 8px 10px; /* antes 10px 12px */
   display: grid;
-  gap: 8px;
+  gap: 6px; /* antes 8px */
 }
 .card-title {
-  font-size: 1rem;
-  line-height: 1.2;
+  font-size: var(--card-title); /* antes ~1rem */
+  line-height: 1.15;
   margin: 0;
   font-weight: 700;
 }
@@ -204,11 +242,39 @@ body {
 .card-dir,
 .card-genre,
 .card-rate {
-  font-size: 0.85rem;
-  margin: 2px 0;
+  font-size: var(--card-text); /* antes 0.85rem */
+  margin: 1px 0;
   color: #4b5563;
 }
 
+/* Badges dentro de la card */
+.card-genre .badge {
+  margin-right: 4px;
+}
+.card-rate .badge {
+  vertical-align: baseline;
+}
+
+/* ---------- Acciones ---------- */
+.card .actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.card .btn-danger {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #ffe8e8;
+  color: #b00020;
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.card .btn-danger:hover {
+  background: #ffdcdc;
+}
+
+/* ---------- Controles ---------- */
 .controls {
   margin: 1rem 0 1.25rem;
 }
@@ -225,28 +291,11 @@ body {
   font-size: 0.95rem;
 }
 
-.card .actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
-}
-.card .btn-danger {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: #ffe8e8;
-  color: #b00020;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-.card .btn-danger:hover {
-  background: #ffdcdc;
-}
-
 /* ---------- Diálogo y formulario ---------- */
 #movie-dialog {
   border: none;
   padding: 0;
-  width: min(720px, 92vw);
+  width: min(560px, 92vw); /* más chico */
   background: var(--panel);
   color: var(--text);
   border-radius: var(--radius);
@@ -256,16 +305,17 @@ body {
   background: rgba(0, 0, 0, 0.55);
 }
 
+/* Form compacto para evitar scroll */
 #movie-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px clamp(16px, 2.5vw, 22px);
+  gap: 12px;
+  padding: 16px clamp(14px, 2.2vw, 18px);
 }
 
 .dialog-header {
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 .dialog-header h2 {
   font-size: var(--step-2);
@@ -279,49 +329,45 @@ body {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columnas en desktop */
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 .form-grid .span-2 {
   grid-column: 1 / -1;
-} /* campos que ocupan el ancho completo */
-
-label {
-  display: grid;
-  gap: 6px;
-  font-size: var(--step-0);
 }
 
-input {
-  width: 100%;
-  background: #fff;
-  color: var(--text);
-  border: 1px solid var(--line);
+/* Ajustes para form-floating (inputs más compactos) */
+.form-floating > .form-control {
+  padding-top: 1.1rem;
+  padding-bottom: 0.5rem;
+  height: calc(2.75rem + 2px);
   border-radius: 12px;
-  padding: 12px 14px;
-  font-size: var(--step-0);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
 }
-input:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--accent) 55%, white);
-  outline-offset: 2px;
+.form-floating > label {
+  color: var(--muted);
+  opacity: 0.9;
 }
 
 .dialog-actions {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 560px) {
   .form-grid {
     grid-template-columns: 1fr;
-  } /* 1 columna en mobile */
+  }
 }
 
+/* ---------- IA (asistente OMDb) ---------- */
 .ia-box {
-  margin: 1rem 0;
+  margin: 0.5rem 0 0.75rem;
 }
 .ia-row {
   display: flex;
@@ -330,22 +376,15 @@ input:focus-visible {
 }
 #ia-title {
   flex: 1;
-  padding: 0.5rem 0.6rem;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.5rem;
 }
 #ia-suggest {
   position: relative;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
-  cursor: pointer;
 }
+
 #ia-suggest[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
 }
-
 .ia-spinner {
   width: 16px;
   height: 16px;
@@ -360,4 +399,11 @@ input:focus-visible {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Forzar que la toolbar ocupe todo el ancho del contenedor Bootstrap */
+#controls,
+#controls .controls-row {
+  max-width: none !important;
+  width: 100% !important;
 }
