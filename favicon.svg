@@ -1,0 +1,18 @@
+<!-- favicon.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6C63FF"/>
+      <stop offset="1" stop-color="#8A84FF"/>
+    </linearGradient>
+  </defs>
+  <!-- Fondo -->
+  <rect x="0" y="0" width="256" height="256" rx="44" fill="url(#g)"/>
+  <!-- Monograma "PA" -->
+  <g fill="#ffffff">
+    <!-- P -->
+    <path d="M64 188V68h52c28 0 44 14 44 36s-16 36-44 36H96v48H64zm32-76h20c14 0 20-6 20-16s-6-16-20-16H96v32z"/>
+    <!-- A -->
+    <path d="M196 188h-28l-8-24h-36l-8 24h-28L132 68h24l40 120zm-44-48-12-36-12 36h24z"/>
+  </g>
+</svg>
