@@ -5,86 +5,64 @@
 <h1 align="center">🎬 M2 Project · Movie Catalog</h1>
 
 <p align="center">
+  <a href="./README.md"><strong>Versión en español 🇦🇷</strong></a> | English 🇬🇧
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Status-In%20Progress-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4-red?style=for-the-badge">
 </p>
 
-> Developed during **Module 2** of the **Full Stack Developer** program at **Henry**, focused on DOM manipulation, JavaScript integration, API consumption, and dynamic data management.
-
 ---
 
 ## 🧭 Table of Contents
 
-- [🧭 Table of Contents](#-table-of-contents)
-- [🧠 Overview](#-overview)
-- [🎯 Academic Goals](#-academic-goals)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [💡 Main Features](#-main-features)
-- [🧩 Project Structure](#-project-structure)
+- [Overview](#overview)
+- [Main Features](#main-features)
+- [How to Run the Project](#how-to-run-the-project)
+- [Project Preview](#project-preview)
+- [Author](#author)
+- [License](#license)
 
 ---
 
-## 🧠 Overview
+## 🎬 Overview
 
-**M2 · Movie Catalog** is an interactive web application that allows users to:
+**PM2 · Movie Catalog** is an interactive web application developed during **Module 2** of the _Full Stack Developer_ career at **Henry**, focusing on **JavaScript Vanilla**, DOM manipulation, API integration, and data persistence with `localStorage`.
 
-- View, add, and filter movies.
-- Sort by year, genre, or rating.
-- Automatically display the **Top 3 highest-grossing movies**.
-- Integrate external APIs.
-- Toggle between **light and dark modes**.
-- Persist data locally using `localStorage`.
-
-The project was built with **Vanilla JavaScript**, **HTML5**, and **CSS3**, applying front-end architecture best practices with a clean, adaptive, and responsive design.
+The project allows users to **visualize**, **add**, and **filter movies**, with real-time updates and a modern UI including a **light/dark mode** toggle.
 
 ---
 
-## 🎯 Academic Goals
+## 🚀 Main Features
 
-- Practice advanced DOM manipulation.
-- Implement API consumption using `fetch` and `async/await`.
-- Create dynamic modals and event-driven interactions.
-- Structure the app into multiple JS modules.
-- Simulate a CRUD (Create, Read, Update, Delete) workflow.
-- Deploy the final project on **GitHub Pages**.
-
----
-
-## 🛠️ Tech Stack
-
-| Category           | Technologies Used                              |
-| ------------------ | ---------------------------------------------- |
-| **Frontend**       | HTML5 · CSS3 · JavaScript (ES6+)               |
-| **UI/Design**      | Bootstrap 5 · Flexbox · Grid · CSS Transitions |
-| **Data Handling**  | LocalStorage · Fetch API                       |
-| **Infrastructure** | Git · GitHub · GitHub Pages                    |
-| **Integrations**   | OMDb API (Open Movie Database)                 |
+- 🗂️ Dynamic movie catalog.
+- 🔍 Filtering by year, genre, and rating.
+- 🎬 “Top 3 Highest-Grossing” section.
+- 🌗 Light/Dark mode with local persistence.
+- 💾 Data saved in `localStorage`.
+- ⚡ External API integration (OMDb).
+- 🧱 Modular architecture and responsive design.
 
 ---
 
-## 💡 Main Features
+## 🧭 How to Run the Project
 
-✅ Add movies through a modal form
-✅ Dynamic filters by **year, genre, and director**
-✅ Ascending / descending sorting
-✅ Top 3 movies by popularity
-✅ Persistent **dark/light mode** toggle
-✅ **Mobile-first** responsive design
-✅ Custom favicon and icons
-✅ Automatic deployment via GitHub Pages
+### 🔹 Option 1 — View Online Demo
 
----
+👉 **[Live Demo on GitHub Pages](https://amundarainp.github.io/PM2copia/)**
 
-## 🧩 Project Structure
+### 🔹 Option 2 — Run Locally
 
 ```bash
-PM2copia/
-│
-├── index.html
-├── styles/              # Main CSS and theme variants
-├── scripts/             # Core JS logic
-├── assets/              # Images, icons, etc.
-├── favicon.svg
-└── README.md
+# Clone the repository
+git clone https://github.com/amundarainp/PM2copia.git
+
+# Navigate into the folder
+cd PM2copia
+
+# Open in VSCode or your browser
+code .
+# or simply open index.html in your browser
 ```
